@@ -60,6 +60,10 @@ def departure_view(request, departure: str):
 def tour_view(request, id: int):
     tour_data = mock_data.tours[id]
 
+    tour_data['title'] = mock_data.title
+
+    tour_data['departures'] = mock_data.departures
+
     # определяем departure из справочника
     encoded_departure = tour_data['departure']
     decoded_departure = mock_data.departures[encoded_departure]
@@ -80,21 +84,6 @@ def tour_view(request, id: int):
         tour_data['nights_postfix'] = 'ночей'
 
     return render(request, 'tour.html', tour_data)
-
-
-# class TestView(View):
-#     def get(self, request, *args, **kwargs):
-#         return render(request, 'test.html', {'name': 'Alex', 'place': 'Lab'})
-#
-#
-# class TestIndex(View):
-#     def get(self, request):
-#         return render(request, 'test_index.html')
-#
-#
-# class TestAbout(View):
-#     def get(self, request):
-#         return render(request, 'test_about.html')
 
 
 # Handlers
