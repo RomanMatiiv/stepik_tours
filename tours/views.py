@@ -1,3 +1,5 @@
+import random
+
 from django.shortcuts import render
 from django.http import HttpResponseBadRequest
 from django.http import HttpResponseNotFound
@@ -9,7 +11,20 @@ import tours.data as mock_data
 
 
 def main_view(request):
-    return render(request, 'index.html')
+    context = {}
+    context['title'] = mock_data.title
+    context['subtitle'] = mock_data.subtitle
+    context['description'] = mock_data.description
+    context['departures'] = mock_data.departures
+
+    get_sample = 6
+    tours_keys = mock_data.tours.keys()
+    if len(tours_keys) < get_sample:
+        get_sample = len(tours_keys)
+    random_tours = random.sample(tours_keys, get_sample)
+    context['random_tours'] = {i: mock_data.tours[i] for i in random_tours}
+
+    return render(request, 'index.html', context)
 
 
 def departure_view(request, departure: str):
