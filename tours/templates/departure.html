@@ -4,10 +4,10 @@
 
   <main class="container mt-3">
     <h1 class="display-5 mt-4">Летим {{ cur_departure_readable }}</h1>
-    <p class="mb-4">Найдено {{ tours_filtered|length }} туров, от {{ tour_min_price }} до {{ tour_max_price }} и от {{ tour_min_nights }} ночей до {{ tour_max_nights }} ночей</p>
+    <p class="mb-4">Найдено {{ tours_filtered|length }} туров, от {{ min_price }} до {{ max_price }} и от {{ min_nights }} ночей до {{ max_nights }} ночей</p>
     <!-- CARDS -->
     <div class="row mt-5">
-        {% for tour_id, tour_data in tours_filtered.items %}
+        {% for tour_id, tour_data in departure_tours.items %}
             <div class="col-4">
                 <div class="embed-responsive embed-responsive-16by9">
                     <img class="card-img-top embed-responsive-item" src="{{ tour_data.picture }}" alt="" />
