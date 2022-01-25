@@ -58,32 +58,40 @@ def departure_view(request, departure: str):
 
 
 def tour_view(request, id: int):
-    tour_data = mock_data.tours[id]
+    context = {}
 
-    tour_data['title'] = mock_data.title
+    context['title'] = mock_data.title
+    context['subtitle'] = mock_data.subtitle
+    context['description'] = mock_data.description
+    context['departures'] = mock_data.departures
 
-    tour_data['departures'] = mock_data.departures
+    current_tour = mock_data.tours[id]
+    context['tour'] = current_tour
 
     # определяем departure из справочника
-    encoded_departure = tour_data['departure']
-    decoded_departure = mock_data.departures[encoded_departure]
-    tour_data['departure_readable'] = decoded_departure
+    _encoded_departure = current_tour['departure']
+    _decoded_departure = mock_data.departures[_encoded_departure]
+    context['tour']['departure_readable'] = _decoded_departure
 
-    tour_data['stars_readable'] = '★' * int(tour_data['stars'])
+    context['tour']['stars_readable'] = '★' * int(current_tour['stars'])
 
+    # TODO написать свой фильтр (https://docs.djangoproject.com/en/4.0/howto/custom-template-tags/)
     # разделяем тысячи в цене с помощью пробелов
-    tour_price = tour_data['price']
-    tour_data['price_readable'] = '{:,}'.format(tour_price).replace(',', ' ')
+    _tour_price = current_tour['price']
+    context['tour']['price_readable'] = '{:,}'.format(_tour_price).replace(',', ' ')
 
-    _nights = int(tour_data['nights'])
+    # TODO заменить на фильтр
+    #  https://gist.github.com/dpetukhov/cb82a0f4d04f7373293bdf2f491863c8
+    #  https://vas3k.ru/dev/django_ru_pluralize/
+    _nights = int(current_tour['nights'])
     if _nights == 1:
-        tour_data['nights_postfix'] = 'ночь'
+        context['tour']['nights_postfix'] = 'ночь'
     elif _nights == 2:
-        tour_data['nights_postfix'] = 'ночи'
+        context['tour']['nights_postfix'] = 'ночи'
     else:
-        tour_data['nights_postfix'] = 'ночей'
+        context['tour']['nights_postfix'] = 'ночей'
 
-    return render(request, 'tour.html', tour_data)
+    return render(request, 'tour.html', context)
 
 
 # Handlers
