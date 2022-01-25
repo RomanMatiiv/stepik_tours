@@ -12,16 +12,18 @@ import tours.data as mock_data
 
 def main_view(request):
     context = {}
+
+    # для шапки
     context['title'] = mock_data.title
     context['subtitle'] = mock_data.subtitle
+
     context['description'] = mock_data.description
     context['departures'] = mock_data.departures
 
-    get_sample = 6
-    tours_keys = mock_data.tours.keys()
-    if len(tours_keys) < get_sample:
-        get_sample = len(tours_keys)
-    random_tours = random.sample(tours_keys, get_sample)
+    count_sample = 6
+    tours_id = mock_data.tours.keys()
+    get_sample = min(count_sample, len(tours_id))
+    random_tours = random.sample(tours_id, get_sample)
     context['random_tours'] = {i: mock_data.tours[i] for i in random_tours}
 
     return render(request, 'index.html', context)
@@ -35,8 +37,6 @@ def departure_view(request, departure: str):
     context['departures'] = mock_data.departures
 
     context['cur_departure_readable'] = mock_data.departures[departure]
-    context['departure'] = departure
-    context['departures'] = mock_data.departures
 
     _departure_tours = {}
     for tour_id, tour_data in mock_data.tours.items():
@@ -60,9 +60,8 @@ def departure_view(request, departure: str):
 def tour_view(request, id: int):
     context = {}
 
+    # для шапки
     context['title'] = mock_data.title
-    context['subtitle'] = mock_data.subtitle
-    context['description'] = mock_data.description
     context['departures'] = mock_data.departures
 
     current_tour = mock_data.tours[id]
