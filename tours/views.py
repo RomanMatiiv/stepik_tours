@@ -28,33 +28,7 @@ def main_view(request):
 
 
 def departure_view(request, departure: str):
-    context = {}
-    context['cur_departure_readable'] = mock_data.departures[departure]
-    context['departure'] = departure
-    context['departures'] = mock_data.departures
-
-    context['title'] = mock_data.title
-
-    tours_filtered = {}
-    _tours_filtered_price = []
-    _tours_filtered_nights = []
-    for tour_id, tour_data in mock_data.tours.items():
-        if tour_data['departure'] == departure:
-            tours_filtered[tour_id] = tour_data
-            _tours_filtered_price.append(tour_data['price'])
-            _tours_filtered_nights.append(tour_data['nights'])
-    tour_min_price = min(_tours_filtered_price)
-    tour_max_price = max(_tours_filtered_price)
-    tour_min_nights = min(_tours_filtered_nights)
-    tour_max_nights = max(_tours_filtered_nights)
-
-    context['tours_filtered'] = tours_filtered
-    context['tour_min_price'] = tour_min_price
-    context['tour_max_price'] = tour_max_price
-    context['tour_min_nights'] = tour_min_nights
-    context['tour_max_nights'] = tour_max_nights
-
-    return render(request, 'departure.html', context)
+    return render(request, 'departure.html')
 
 
 def tour_view(request, id: int):
