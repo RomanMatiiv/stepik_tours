@@ -17,7 +17,7 @@ tours = {
         "price": 62000,
         "stars": "4",
         "country": "Куба",
-        "nights": 6,
+        "nights": 1,
         "date": "2 марта",
     },
     2: {

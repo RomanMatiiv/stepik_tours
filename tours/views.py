@@ -36,7 +36,7 @@ def departure_view(request, departure: str):
     context['title'] = mock_data.title
     context['departures'] = mock_data.departures
 
-    context['cur_departure_readable'] = mock_data.departures[departure]
+    context['cur_departure'] = departure
 
     _departure_tours = {}
     for tour_id, tour_data in mock_data.tours.items():
@@ -66,29 +66,6 @@ def tour_view(request, id: int):
 
     current_tour = mock_data.tours[id]
     context['tour'] = current_tour
-
-    # определяем departure из справочника
-    _encoded_departure = current_tour['departure']
-    _decoded_departure = mock_data.departures[_encoded_departure]
-    context['tour']['departure_readable'] = _decoded_departure
-
-    context['tour']['stars_readable'] = '★' * int(current_tour['stars'])
-
-    # TODO написать свой фильтр (https://docs.djangoproject.com/en/4.0/howto/custom-template-tags/)
-    # разделяем тысячи в цене с помощью пробелов
-    _tour_price = current_tour['price']
-    context['tour']['price_readable'] = '{:,}'.format(_tour_price).replace(',', ' ')
-
-    # TODO заменить на фильтр
-    #  https://gist.github.com/dpetukhov/cb82a0f4d04f7373293bdf2f491863c8
-    #  https://vas3k.ru/dev/django_ru_pluralize/
-    _nights = int(current_tour['nights'])
-    if _nights == 1:
-        context['tour']['nights_postfix'] = 'ночь'
-    elif _nights == 2:
-        context['tour']['nights_postfix'] = 'ночи'
-    else:
-        context['tour']['nights_postfix'] = 'ночей'
 
     return render(request, 'tour.html', context)
 

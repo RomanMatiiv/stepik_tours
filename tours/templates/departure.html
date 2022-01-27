@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 
+{% load filters %}
+
 {% block main %}
 
   <main class="container mt-3">
-    <h1 class="display-5 mt-4">Летим {{ cur_departure_readable }}</h1>
-    <p class="mb-4">Найдено {{ tours_filtered|length }} туров, от {{ min_price }} до {{ max_price }} и от {{ min_nights }} ночей до {{ max_nights }} ночей</p>
+    <h1 class="display-5 mt-4">Летим {{ cur_departure|get_departure:departures }}</h1>
+    <p class="mb-4">Найдено {{ departure_tours|length }} {{ departure_tours|length|rupluralize:"тур,тура,туров" }}, от {{ min_price|readable_price }} до {{ max_price|readable_price }} и от {{ min_nights }} {{ min_nights|rupluralize:"ночи,ночи,ночей" }} до {{ max_nights }} {{ max_nights|rupluralize:"ночи,ночей,ночей" }}</p>
     <!-- CARDS -->
     <div class="row mt-5">
         {% for tour_id, tour_data in departure_tours.items %}
