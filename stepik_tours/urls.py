@@ -18,10 +18,10 @@ from django.urls import path
 from tours.views import departure_view
 from tours.views import main_view
 from tours.views import tour_view
-from tours.views import custom_handler400
-from tours.views import custom_handler403
-from tours.views import custom_handler404
-from tours.views import custom_handler500
+from stepik_tours.error_handlers import custom_handler400
+from stepik_tours.error_handlers import custom_handler403
+from stepik_tours.error_handlers import custom_handler404
+from stepik_tours.error_handlers import custom_handler500
 
 
 urlpatterns = [
