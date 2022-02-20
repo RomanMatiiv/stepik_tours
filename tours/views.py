@@ -9,5 +9,5 @@ def departure_view(request, departure: str):
     return render(request, 'departure.html')
 
 
-def tour_view(request, id: int):
+def tour_view(request, pk: int):
     return render(request, 'tour.html')
